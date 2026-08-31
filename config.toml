@@ -1,0 +1,9 @@
+# GkSay 配置文件（保存后，下次按 Ctrl+F3 时生效）
+interval_ms = 1000
+open_chat_delay_ms = 120
+paste_delay_ms = 100
+require_lol_foreground = false
+restore_clipboard = true
+
+# 允许接收消息的前台进程名，可按实际情况增加
+allowed_processes = ["League of Legends.exe"]

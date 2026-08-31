@@ -1,0 +1,18 @@
+node_modules/
+.pnpm-store/
+dist/
+src-tauri/target/
+src-tauri/gen/
+portable/
+*.log
+*.exe
+*.zip
+
+# 本项目仅发布 Windows 版本，只提交 Windows ICO；其他图标由 tauri icon 生成
+src-tauri/icons/*
+!src-tauri/icons/icon.ico
+
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
