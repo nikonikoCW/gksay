@@ -14,7 +14,7 @@ GkSay 从程序同目录的 `messages.txt` 读取消息。按下全局快捷键�
 
 ## 功能
 
-- `Ctrl+F3` 全局快捷键开始或停止发送
+- `Ctrl+F3` 底层按键状态检测开始或停止发送，兼容常见全屏窗口
 - 每次开始时重新读取 `messages.txt` 和 `config.toml`，修改后无需重启
 - 支持 UTF-8 中文文本，一行一条消息
 - 自动忽略空行以及以 `#` 开头的注释
@@ -129,6 +129,7 @@ cd ..
 src/                          Tauri WebView 前端
 src-tauri/src/config.rs       配置读取与默认值
 src-tauri/src/message_file.rs 消息文件解析
+src-tauri/src/hotkey.rs       全屏兼容的 Win32 快捷键检测
 src-tauri/src/runner.rs       发送队列和停止控制
 src-tauri/src/platform/windows/input.rs       Win32 SendInput
 src-tauri/src/platform/windows/foreground.rs  前台进程检测

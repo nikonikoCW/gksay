@@ -1,4 +1,5 @@
 mod config;
+mod hotkey;
 mod message_file;
 mod platform;
 mod runner;
@@ -7,7 +8,6 @@ mod state;
 use state::{RuntimeState, Snapshot};
 use std::{fs, path::PathBuf, process::Command};
 use tauri::{AppHandle, Manager};
-use tauri_plugin_global_shortcut::{Code, GlobalShortcutExt, Modifiers, Shortcut, ShortcutState};
 
 pub fn portable_dir() -> Result<PathBuf, String> {
     #[cfg(debug_assertions)]
@@ -105,24 +105,10 @@ pub fn run() {
         interval_ms: 1_000,
         hotkey: "Ctrl+F3".into(),
     });
-    let ctrl_f3 = Shortcut::new(Some(Modifiers::CONTROL), Code::F3);
-
     tauri::Builder::default()
         .manage(RuntimeState::new(initial))
-        .setup(move |app| {
-            let shortcut_for_handler = ctrl_f3.clone();
-            app.handle().plugin(
-                tauri_plugin_global_shortcut::Builder::new()
-                    .with_handler(move |app, shortcut, event| {
-                        if shortcut == &shortcut_for_handler
-                            && event.state() == ShortcutState::Pressed
-                        {
-                            runner::toggle(app);
-                        }
-                    })
-                    .build(),
-            )?;
-            app.global_shortcut().register(ctrl_f3)?;
+        .setup(|app| {
+            hotkey::start(app.handle().clone())?;
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
